@@ -1,4 +1,4 @@
-package views
+package com.application.tcgmy.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import data.GameList
+import com.application.tcgmy.data.GameList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterial3Api

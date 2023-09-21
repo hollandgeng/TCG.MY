@@ -1,4 +1,4 @@
-package views
+package com.application.tcgmy.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,7 +34,7 @@ import coil.compose.AsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.application.tcgmy.R
-import data.GameList
+import com.application.tcgmy.data.GameList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

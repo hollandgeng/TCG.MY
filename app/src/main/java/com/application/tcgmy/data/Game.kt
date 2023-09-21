@@ -1,4 +1,4 @@
-package data
+package com.application.tcgmy.data
 
 import java.util.UUID
 
