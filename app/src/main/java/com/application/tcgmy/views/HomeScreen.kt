@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.application.tcgmy.data.GameList
+import com.application.tcgmy.views.search.SearchScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,7 +69,9 @@ fun HomeView() {
             }
         )
         { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues))
+            Box(modifier = Modifier.padding(paddingValues)) {
+                SearchScreen()
+            }
         }
 
     }

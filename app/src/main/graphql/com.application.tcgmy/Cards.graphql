@@ -1,0 +1,10 @@
+query Cards {
+    cards(query: "dbvs") {
+        code
+        name
+        rarity
+        price
+        currency
+        image
+    }
+}
