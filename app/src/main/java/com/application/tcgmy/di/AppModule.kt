@@ -1,9 +1,7 @@
 package com.application.tcgmy.di
 
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.network.okHttpClient
 import com.application.tcgmy.data.ApolloCardClient
-import com.application.tcgmy.data.LoggingInterceptor
 import com.application.tcgmy.domain.CardClient
 import com.application.tcgmy.domain.GetCardUseCase
 import dagger.Module
@@ -20,8 +18,7 @@ object AppModule {
     @Singleton
     fun provideApolloClient(): ApolloClient {
         return ApolloClient.Builder()
-            .serverUrl("http://192.168.68.135:8080/graphiql")
-            //.addHttpInterceptor(LoggingInterceptor())
+            .serverUrl("http://192.168.100.190:8080/query")
             .build()
     }
 

@@ -11,7 +11,7 @@ class ApolloCardClient(
     override suspend fun getCards(query: String): List<SimpleCard> {
         return apolloClient
             .query(
-                CardsQuery()
+                CardsQuery(query = query)
             )
             .execute()
             .data

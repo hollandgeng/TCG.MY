@@ -98,8 +98,6 @@ dependencies {
     // Apollo
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-
     // Room Database
 //    implementation("androidx.room:room-runtime:2.5.2")
 //    implementation("androidx.room:room-ktx:2.5.2")
