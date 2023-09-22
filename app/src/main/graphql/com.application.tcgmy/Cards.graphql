@@ -1,5 +1,5 @@
-query Cards {
-    cards(query: "dbvs") {
+query Cards($query: String!) {
+    cards(query: $query) {
         code
         name
         rarity
