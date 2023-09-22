@@ -3,6 +3,7 @@ package com.application.tcgmy.views.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.tcgmy.domain.GetCardUseCase
+import com.application.tcgmy.domain.SimpleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +29,7 @@ class SearchViewModel @Inject constructor(
             ) }
             _searchState.update { it.copy(
                 cards = getCardUseCase.execute(query = query),
+                sortedCards = sortCards(cards = getCardUseCase.execute(query = query)),
                 isLoading = false
             ) }
         }
@@ -35,5 +37,18 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchTextChange(text: String) {
         _searchText.value = text
+    }
+
+    private fun sortCards(cards: List<SimpleCard>): Map<String, List<SimpleCard>> {
+        var result: Map<String, List<SimpleCard>> = emptyMap()
+
+        var previousRarity = ""
+        var sortedCard: List<SimpleCard> = listOf()
+
+        result = cards.groupBy {
+            it.rarity
+        }
+
+        return result
     }
 }
