@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "261997029806",
+    "project_id": "tcg-my",
+    "storage_bucket": "tcg-my.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261997029806:android:a7f1598bc1b80e5c96003f",
+        "android_client_info": {
+          "package_name": "com.application.tcgmy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEjrEpHpvCRH4xvYFXpJ73vZIE4VSJRsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

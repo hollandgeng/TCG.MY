@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
     id("com.apollographql.apollo3").version("3.7.3")
     kotlin("kapt")
@@ -94,6 +95,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    // Firebasae
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
 
     // Apollo
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
