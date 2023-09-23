@@ -102,6 +102,9 @@ dependencies {
     // Apollo
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
 
+    // Shimmer
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.0.5")
+
     // Room Database
 //    implementation("androidx.room:room-runtime:2.5.2")
 //    implementation("androidx.room:room-ktx:2.5.2")

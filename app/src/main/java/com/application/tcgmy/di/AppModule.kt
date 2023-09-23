@@ -18,7 +18,7 @@ object AppModule {
     @Singleton
     fun provideApolloClient(): ApolloClient {
         return ApolloClient.Builder()
-            .serverUrl("http://192.168.100.190:8080/query")
+            .serverUrl("http://192.168.68.135:8080/query")
             .build()
     }
 
