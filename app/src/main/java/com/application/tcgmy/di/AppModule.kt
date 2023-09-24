@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.application.tcgmy.data.ApolloCardClient
 import com.application.tcgmy.domain.CardClient
 import com.application.tcgmy.domain.GetCardUseCase
+import com.application.tcgmy.domain.GetGamesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +33,11 @@ object AppModule {
     @Singleton
     fun provideGetCardUseCase(cardClient: CardClient): GetCardUseCase {
         return GetCardUseCase(cardClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetGamesUseCase(cardClient: CardClient): GetGamesUseCase {
+        return GetGamesUseCase(cardClient)
     }
 }

@@ -78,7 +78,7 @@ fun CardColumn(
                     modifier = Modifier.padding(10.dp)
                 ) {
                     Text(text = card.price.toString())
-                    Text(text = card.currency)
+                    Text(text = card.currency.grapheme)
                 }
             }
 

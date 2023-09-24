@@ -1,0 +1,6 @@
+query Games {
+    games {
+        title
+        image
+    }
+}

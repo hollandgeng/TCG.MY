@@ -2,6 +2,7 @@ package com.application.tcgmy.views.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.application.tcgmy.constants.GameTitle
 import com.application.tcgmy.domain.GetCardUseCase
 import com.application.tcgmy.domain.SimpleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +28,10 @@ class SearchViewModel @Inject constructor(
             _searchState.update { it.copy(
                 isLoading = true
             ) }
+            // TODO: Update dynamic game selection via drawer
             _searchState.update { it.copy(
-                cards = getCardUseCase.execute(query = query),
-                sortedCards = sortCards(cards = getCardUseCase.execute(query = query)),
+//                cards = getCardUseCase.execute(query = query),
+                sortedCards = sortCards(cards = getCardUseCase.execute(query = query, game = GameTitle.YGO)),
                 isLoading = false
             ) }
         }
@@ -40,12 +42,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun sortCards(cards: List<SimpleCard>): Map<String, List<SimpleCard>> {
-        var result: Map<String, List<SimpleCard>> = emptyMap()
 
-        var previousRarity = ""
-        var sortedCard: List<SimpleCard> = listOf()
-
-        result = cards.groupBy {
+        val result: Map<String, List<SimpleCard>> = cards.groupBy {
             it.rarity
         }
 

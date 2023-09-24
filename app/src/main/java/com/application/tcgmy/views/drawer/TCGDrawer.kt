@@ -1,10 +1,8 @@
-package com.application.tcgmy.views
+package com.application.tcgmy.views.drawer
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,31 +19,40 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.application.tcgmy.R
-import com.application.tcgmy.data.GameList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TcgDrawer(onMenuIconClicked : () -> Unit = {})
-{
+fun TcgDrawer(
+    viewModel: TCGDrawerViewModel = hiltViewModel(),
+    onMenuIconClicked : () -> Unit = {}
+) {
+    val drawerState by viewModel.drawerState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getListOfGames()
+    }
+
     ModalDrawerSheet(Modifier.padding(end = 20.dp)) {
 
         TcgDrawer_Header(onMenuIconClicked)
 
         LazyColumn {
-            items(items= GameList, key = { game->game.id})
+            items(items= drawerState.games, key = { game->game.id })
             {
                 NavigationDrawerItem(label = { Text(it.title) }, selected = false, onClick = { },
                     icon = {
@@ -53,7 +60,7 @@ fun TcgDrawer(onMenuIconClicked : () -> Unit = {})
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(it.imageUrl).decoderFactory(SvgDecoder.Factory()).crossfade(true).build(),
                             error = rememberVectorPainter(image = Icons.Filled.Lock),
-                            contentDescription = "${it.title}",
+                            contentDescription = it.title,
                             modifier = Modifier
                                 .height(50.dp)
                                 .width(50.dp)
@@ -66,8 +73,9 @@ fun TcgDrawer(onMenuIconClicked : () -> Unit = {})
             icon = {
                 Icon(painter = painterResource(id = R.drawable.playing_cards), contentDescription = "",
                     modifier = Modifier
-                    .height(50.dp)
-                    .width(50.dp).scale(scaleX = 1f, scaleY = -1f))
+                        .height(50.dp)
+                        .width(50.dp)
+                        .scale(scaleX = 1f, scaleY = -1f))
             })
     }
 

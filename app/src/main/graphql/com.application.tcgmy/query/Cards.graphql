@@ -1,0 +1,18 @@
+query Cards($query: String!, $game: GameCode!) {
+    cards(query: $query, game: $game) {
+        code
+        name
+        rarity
+        price
+        currency {
+            code
+            numericCode
+            fraction
+            grapheme
+            template
+            decimal
+            thousand
+        }
+        image
+    }
+}

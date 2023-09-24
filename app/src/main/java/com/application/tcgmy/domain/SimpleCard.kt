@@ -5,6 +5,6 @@ data class SimpleCard(
     val name: String = "",
     val rarity: String = "",
     val price: Int = 0,
-    val currency: String = "",
+    val currency: Currency = Currency(),
     val image: String = ""
 )

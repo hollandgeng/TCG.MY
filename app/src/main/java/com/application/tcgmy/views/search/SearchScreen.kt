@@ -1,8 +1,8 @@
 package com.application.tcgmy.views.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,15 +15,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -33,7 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.valentinilk.shimmer.shimmer
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class
@@ -47,12 +48,25 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        val searchText by viewModel.searchText.collectAsState()
-        val searchState by viewModel.searchState.collectAsState()
+        val searchText by viewModel.searchText.collectAsStateWithLifecycle()
+        val searchState by viewModel.searchState.collectAsStateWithLifecycle()
 
         // UI Manager instances
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
+
+        // Expanded views
+        var visible by remember {
+            mutableStateOf(false)
+        }
+
+        val isExpandedMap by remember {
+            mutableStateOf(
+                List(searchState.sortedCards.size) { index ->  
+                    index to false
+                }
+            )
+        }
 
         TextField(
             value = searchText,
@@ -95,7 +109,10 @@ fun SearchScreen(
                     stickyHeader {
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                visible = !visible
+                            }
                         ) {
                             Text(
                                 text = rarity,
@@ -112,7 +129,9 @@ fun SearchScreen(
                         }
                     }
                     items(searchState.sortedCards[rarity]!!) {card ->
-                        CardColumn(card = card)
+                        AnimatedVisibility(visible = visible) {
+                            CardColumn(card = card)
+                        }
                     }
                 }
             }
