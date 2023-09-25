@@ -2,6 +2,7 @@ package com.application.tcgmy.data
 
 import com.application.tcgmy.CardsQuery
 import com.application.tcgmy.GamesQuery
+import com.application.tcgmy.constants.GameTitle
 import com.application.tcgmy.domain.Currency
 import com.application.tcgmy.domain.SimpleCard
 
@@ -27,7 +28,7 @@ fun CardsQuery.Card.toSimpleCard(): SimpleCard {
 
 fun GamesQuery.Game.toGame(): Game {
     return Game(
-//        id = GameTitle.fromGameCode(),
+        code = GameTitle.fromGameCode(code),
         title = title,
         imageUrl = image
     )

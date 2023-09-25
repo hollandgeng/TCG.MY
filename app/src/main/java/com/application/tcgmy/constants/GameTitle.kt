@@ -10,16 +10,18 @@ enum class GameTitle(val code: GameCode) {
     OPC(GameCode.OPC),
     WS(GameCode.WS);
 
-    fun fromGameCode(gameCode: GameCode): GameTitle {
-        var result = Default
+    companion object {
+        fun fromGameCode(gameCode: GameCode): GameTitle {
+            var result = Default
 
-        for (title in GameTitle.values()) {
-            if (gameCode == title.code)
-            {
-                result = title
+            for (title in GameTitle.values()) {
+                if (gameCode == title.code)
+                {
+                    result = title
+                }
             }
-        }
 
-        return result
+            return result
+        }
     }
 }

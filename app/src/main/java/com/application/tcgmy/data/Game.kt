@@ -7,7 +7,7 @@ import java.util.UUID
 data class Game (
     val id : UUID = UUID.randomUUID(),
     val code : GameTitle = GameTitle.Default,
-    val title : String,
+    val title : String = "",
     val imageUrl : String? = null
 )
 

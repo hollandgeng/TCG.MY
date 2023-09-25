@@ -34,12 +34,14 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.application.tcgmy.R
+import com.application.tcgmy.data.Game
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TcgDrawer(
     viewModel: TCGDrawerViewModel = hiltViewModel(),
-    onMenuIconClicked : () -> Unit = {}
+    onMenuIconClicked: () -> Unit,
+    onItemClicked: (Game) -> Unit
 ) {
     val drawerState by viewModel.drawerState.collectAsStateWithLifecycle()
 
@@ -52,13 +54,16 @@ fun TcgDrawer(
         TcgDrawer_Header(onMenuIconClicked)
 
         LazyColumn {
-            items(items= drawerState.games, key = { game->game.id })
-            {
-                NavigationDrawerItem(label = { Text(it.title) }, selected = false, onClick = { },
+            items(items = drawerState.games, key = { game -> game.id }) {
+                NavigationDrawerItem(label = { Text(it.title) }, selected = false,
+                    onClick = {
+                        onItemClicked(it)
+                    },
                     icon = {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(it.imageUrl).decoderFactory(SvgDecoder.Factory()).crossfade(true).build(),
+                                .data(it.imageUrl).decoderFactory(SvgDecoder.Factory())
+                                .crossfade(true).build(),
                             error = rememberVectorPainter(image = Icons.Filled.Lock),
                             contentDescription = it.title,
                             modifier = Modifier
@@ -71,21 +76,26 @@ fun TcgDrawer(
 
         NavigationDrawerItem(label = { Text("View All Games") }, selected = true, onClick = { },
             icon = {
-                Icon(painter = painterResource(id = R.drawable.playing_cards), contentDescription = "",
+                Icon(
+                    painter = painterResource(id = R.drawable.playing_cards),
+                    contentDescription = "",
                     modifier = Modifier
                         .height(50.dp)
                         .width(50.dp)
-                        .scale(scaleX = 1f, scaleY = -1f))
+                        .scale(scaleX = 1f, scaleY = -1f)
+                )
             })
     }
 
 }
 
 @Composable
-fun TcgDrawer_Header(onMenuIconClicked : () -> Unit)
-{
+fun TcgDrawer_Header(onMenuIconClicked: () -> Unit) {
     Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-        IconButton(onClick = { onMenuIconClicked() }, modifier = Modifier.padding(top = 10.dp,end = 10.dp)) {
+        IconButton(
+            onClick = { onMenuIconClicked() },
+            modifier = Modifier.padding(top = 10.dp, end = 10.dp)
+        ) {
             Image(imageVector = Icons.Filled.Menu, contentDescription = "Hamburger")
         }
     }
@@ -94,7 +104,6 @@ fun TcgDrawer_Header(onMenuIconClicked : () -> Unit)
 
 @Preview(showBackground = true)
 @Composable
-fun Drawer_Preview()
-{
-    TcgDrawer()
+fun Drawer_Preview() {
+//    TcgDrawer()
 }

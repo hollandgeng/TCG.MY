@@ -2,6 +2,7 @@ package com.application.tcgmy.views.drawer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.application.tcgmy.data.Game
 import com.application.tcgmy.domain.GetGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,8 +21,14 @@ class TCGDrawerViewModel @Inject constructor(
     fun getListOfGames() {
         viewModelScope.launch {
             _drawerState.update {  it.copy(
-              games = getGamesUseCase.execute()
+              games = sortGames(
+                  games = getGamesUseCase.execute()
+              )
             ) }
         }
+    }
+
+    private fun sortGames(games: List<Game>): List<Game> {
+        return games.sortedBy { it.title }
     }
 }

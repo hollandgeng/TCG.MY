@@ -24,12 +24,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.application.tcgmy.data.Game
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class
 )
 @Composable
 fun SearchScreen(
+    game: Game,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
@@ -63,7 +65,7 @@ fun SearchScreen(
                     keyboardController?.hide()
                     focusManager.clearFocus()
                     // Login
-                    viewModel.searchCard(searchText)
+                    viewModel.searchCard(searchText, game.code)
                 }
             ),
             placeholder = { Text(text = "Search") }

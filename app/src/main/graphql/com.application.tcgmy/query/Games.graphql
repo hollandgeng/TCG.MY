@@ -2,5 +2,6 @@ query Games {
     games {
         title
         image
+        code
     }
 }

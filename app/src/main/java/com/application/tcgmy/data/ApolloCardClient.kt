@@ -1,6 +1,7 @@
 package com.application.tcgmy.data
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.exception.ApolloException
 import com.application.tcgmy.CardsQuery
 import com.application.tcgmy.GamesQuery
 import com.application.tcgmy.domain.CardClient
@@ -12,24 +13,44 @@ class ApolloCardClient(
 ): CardClient {
 
     override suspend fun getGames(): List<Game> {
-        return apolloClient
-            .query(GamesQuery())
-            .execute()
-            .data
-            ?.games
-            ?.map { it.toGame() }
-            ?: emptyList()
+        try {
+            val response = apolloClient.query(GamesQuery()).execute()
+
+            // Check for GraphQL errors
+            if (response.hasErrors()) {
+                for (error in response.errors!!) {
+                    // Handle each GraphQL error
+                    // You can log the error or perform any necessary actions
+                    println("GraphQL Error: ${error.message}")
+                }
+            }
+
+            return response.data?.games?.map { it.toGame() } ?: emptyList()
+        } catch (e: ApolloException) {
+            // Handle Apollo exceptions (network errors, GraphQL errors)
+            e.printStackTrace()
+            return emptyList()
+        }
     }
 
     override suspend fun getCards(query: String, games: GameCode): List<SimpleCard> {
-        return apolloClient
-            .query(
-                CardsQuery(query = query, game = games)
-            )
-            .execute()
-            .data
-            ?.cards
-            ?.map { it.toSimpleCard() }
-            ?: emptyList()
+        try {
+            val response = apolloClient.query(CardsQuery(query = query, game = games)).execute()
+
+            // Check for GraphQL errors
+            if (response.hasErrors()) {
+                for (error in response.errors!!) {
+                    // Handle each GraphQL error
+                    // You can log the error or perform any necessary actions
+                    println("GraphQL Error: ${error.message}")
+                }
+            }
+
+            return response.data?.cards?.map { it.toSimpleCard() } ?: emptyList()
+        } catch (e: ApolloException) {
+            // Handle Apollo exceptions (network errors, GraphQL errors)
+            e.printStackTrace()
+            return emptyList()
+        }
     }
 }

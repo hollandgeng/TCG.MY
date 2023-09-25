@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getCardUseCase: GetCardUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _searchState = MutableStateFlow(SearchState())
     val searchState = _searchState.asStateFlow()
@@ -23,17 +23,25 @@ class SearchViewModel @Inject constructor(
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
-    fun searchCard(query: String) {
+    fun searchCard(query: String, gameTitle: GameTitle) {
         viewModelScope.launch {
-            _searchState.update { it.copy(
-                isLoading = true
-            ) }
+            _searchState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
             // TODO: Update dynamic game selection via drawer
-            _searchState.update { it.copy(
-//                cards = getCardUseCase.execute(query = query),
-                sortedCards = sortCards(cards = getCardUseCase.execute(query = query, game = GameTitle.YGO)),
-                isLoading = false
-            ) }
+            _searchState.update {
+                it.copy(
+                    sortedCards = sortCards(
+                        cards = getCardUseCase.execute(
+                            query = query,
+                            game = gameTitle
+                        )
+                    ),
+                    isLoading = false
+                )
+            }
         }
     }
 
