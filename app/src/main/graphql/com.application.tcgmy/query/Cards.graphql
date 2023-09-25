@@ -14,5 +14,6 @@ query Cards($query: String!, $game: GameCode!) {
             thousand
         }
         image
+        score
     }
 }

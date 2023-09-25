@@ -47,6 +47,24 @@ class SearchViewModel @Inject constructor(
             it.rarity
         }
 
-        return result
+        // Sort Rarity
+        val sortedRarity = result.keys.sortedByDescending { key ->
+            result[key]?.maxByOrNull { item ->
+                item.score
+            }?.score
+        }
+
+        var sortedResult = sortedRarity.associateWith { key ->
+            result[key] ?: emptyList()
+        }
+
+        // Sort List of cards
+        sortedResult = sortedResult.mapValues { entry ->
+            entry.value.sortedByDescending { item ->
+                item.score
+            }
+        }
+
+        return sortedResult
     }
 }

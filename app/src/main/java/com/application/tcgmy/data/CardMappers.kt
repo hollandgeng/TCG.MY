@@ -2,7 +2,6 @@ package com.application.tcgmy.data
 
 import com.application.tcgmy.CardsQuery
 import com.application.tcgmy.GamesQuery
-import com.application.tcgmy.constants.GameTitle
 import com.application.tcgmy.domain.Currency
 import com.application.tcgmy.domain.SimpleCard
 
@@ -21,7 +20,8 @@ fun CardsQuery.Card.toSimpleCard(): SimpleCard {
             decimal = currency.decimal,
             thousand = currency.thousand
         ),
-        image = image ?: "No Image"
+        image = image ?: "No Image",
+        score = score ?: -1
     )
 }
 
