@@ -1,11 +1,54 @@
 type Card {
     code: String!
-    name: String!
+    jpName: String!
     rarity: String!
     condition: String
     price: Int!
     source: String!
     currency: Currency!
-    image: String
-    score: Int #based on rarity, the higher the score, the rarer the card
+    image: String!
+    score: Int! #based on rarity, the higher the score, the rarer the card
+    game: Game!
+    detail: DetailInfo!
+}
+
+type DetailInfo {
+    engName: String!
+    cardType: String!
+    property: String!
+    attribute: String!
+    types: [String!]!
+    level: String! #level or rank
+    linkArrows: String!
+    attack: String!
+    defence: String!
+    link: String!
+    effectTypes: [String!]! #effect types
+    effect: String! #card effect
+    pendulum: Pendulum!
+    status: BanStatus!
+    power: String!
+    colors: [String!]!
+    product: String!
+    rarity: String!
+    life: String!
+    category: String!
+    cost: String!
+    counter: String!
+    traits: [String!]!
+    trigger: String!
+    soul: String!
+}
+
+type Pendulum {
+    effectTypes: [String!]! #effect types
+    scale: String!
+    effect: String! #card effect
+}
+
+enum BanStatus {
+    UNLIMITED
+    SEMI_LIMITED
+    LIMITED
+    FORBIDDEN
 }

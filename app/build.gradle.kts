@@ -88,6 +88,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.navigation:navigation-compose:2.7.3")
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.44")
@@ -101,6 +102,9 @@ dependencies {
 
     // Apollo
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie-compose:4.0.0")
 
     // Shimmer
     implementation("com.valentinilk.shimmer:compose-shimmer:1.0.5")

@@ -4,8 +4,10 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.application.tcgmy.CardsQuery
 import com.application.tcgmy.GamesQuery
+import com.application.tcgmy.YgoCardDetailsQuery
 import com.application.tcgmy.domain.CardClient
-import com.application.tcgmy.domain.SimpleCard
+import com.application.tcgmy.constants.internal.YgoDetailedCard
+import com.application.tcgmy.constants.internal.SimpleCard
 import com.application.tcgmy.type.GameCode
 
 class ApolloCardClient(
@@ -47,6 +49,27 @@ class ApolloCardClient(
             }
 
             return response.data?.cards?.map { it.toSimpleCard() } ?: emptyList()
+        } catch (e: ApolloException) {
+            // Handle Apollo exceptions (network errors, GraphQL errors)
+            e.printStackTrace()
+            return emptyList()
+        }
+    }
+
+    override suspend fun getYgoCardDetails(query: String, games: GameCode): List<YgoDetailedCard> {
+        try {
+            val response = apolloClient.query(YgoCardDetailsQuery(query = query)).execute()
+
+            // Check for GraphQL errors
+            if (response.hasErrors()) {
+                for (error in response.errors!!) {
+                    // Handle each GraphQL error
+                    // You can log the error or perform any necessary actions
+                    println("GraphQL Error: ${error.message}")
+                }
+            }
+
+            return response.data?.cards?.map { it.toYgoDetailedCard() } ?: emptyList()
         } catch (e: ApolloException) {
             // Handle Apollo exceptions (network errors, GraphQL errors)
             e.printStackTrace()

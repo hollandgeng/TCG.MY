@@ -1,4 +1,6 @@
-package com.application.tcgmy.domain
+package com.application.tcgmy.constants.internal
+
+import com.application.tcgmy.constants.GameTitle
 
 data class SimpleCard(
     val code: String = "",
@@ -7,5 +9,6 @@ data class SimpleCard(
     val price: Int = 0,
     val currency: Currency = Currency(),
     val image: String = "",
-    val score: Int = -1
+    val score: Int = -1,
+    val game: GameTitle = GameTitle.Default
 )

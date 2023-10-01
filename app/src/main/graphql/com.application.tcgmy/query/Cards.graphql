@@ -1,7 +1,7 @@
 query Cards($query: String!, $game: GameCode!) {
     cards(query: $query, game: $game) {
         code
-        name
+        jpName
         rarity
         price
         currency {
@@ -15,5 +15,8 @@ query Cards($query: String!, $game: GameCode!) {
         }
         image
         score
+        game {
+            code
+        }
     }
 }

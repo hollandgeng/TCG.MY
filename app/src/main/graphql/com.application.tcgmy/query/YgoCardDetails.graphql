@@ -1,0 +1,26 @@
+query YgoCardDetails($query: String!) {
+    cards(query: $query, game: YGO) {
+        code
+        jpName
+        detail {
+            engName
+            cardType
+            property
+            attribute
+            types
+            level # level or rank
+            linkArrows
+            attack
+            defence
+            link
+            effectTypes # effect types
+            effect # card effect
+            pendulum {
+                effectTypes #effect types
+                scale
+                effect #card effect
+            }
+            status
+        }
+    }
+}

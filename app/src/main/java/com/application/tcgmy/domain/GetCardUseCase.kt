@@ -1,6 +1,7 @@
 package com.application.tcgmy.domain
 
 import com.application.tcgmy.constants.GameTitle
+import com.application.tcgmy.constants.internal.SimpleCard
 
 class GetCardUseCase(
     private val cardClient: CardClient

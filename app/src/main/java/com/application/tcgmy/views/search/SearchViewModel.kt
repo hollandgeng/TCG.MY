@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.tcgmy.constants.GameTitle
 import com.application.tcgmy.domain.GetCardUseCase
-import com.application.tcgmy.domain.SimpleCard
+import com.application.tcgmy.constants.internal.SimpleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +30,7 @@ class SearchViewModel @Inject constructor(
                     isLoading = true
                 )
             }
-            // TODO: Update dynamic game selection via drawer
+
             _searchState.update {
                 it.copy(
                     sortedCards = sortCards(

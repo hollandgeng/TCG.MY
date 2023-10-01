@@ -1,4 +1,4 @@
-package com.application.tcgmy.domain
+package com.application.tcgmy.constants.internal
 
 data class Currency(
     val code: String = "",
