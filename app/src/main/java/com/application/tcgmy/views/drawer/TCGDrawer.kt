@@ -1,10 +1,8 @@
-package com.application.tcgmy.views
+package com.application.tcgmy.views.drawer
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,39 +19,53 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.application.tcgmy.R
-import com.application.tcgmy.data.GameList
+import com.application.tcgmy.data.Game
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TcgDrawer(onMenuIconClicked : () -> Unit = {})
-{
+fun TcgDrawer(
+    viewModel: TCGDrawerViewModel = hiltViewModel(),
+    onMenuIconClicked: () -> Unit,
+    onItemClicked: (Game) -> Unit
+) {
+    val drawerState by viewModel.drawerState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getListOfGames()
+    }
+
     ModalDrawerSheet(Modifier.padding(end = 20.dp)) {
 
         TcgDrawer_Header(onMenuIconClicked)
 
         LazyColumn {
-            items(items= GameList, key = { game->game.id})
-            {
-                NavigationDrawerItem(label = { Text(it.title) }, selected = false, onClick = { },
+            items(items = drawerState.games, key = { game -> game.id }) {
+                NavigationDrawerItem(label = { Text(it.title) }, selected = false,
+                    onClick = {
+                        onItemClicked(it)
+                    },
                     icon = {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(it.imageUrl).decoderFactory(SvgDecoder.Factory()).crossfade(true).build(),
+                                .data(it.imageUrl).decoderFactory(SvgDecoder.Factory())
+                                .crossfade(true).build(),
                             error = rememberVectorPainter(image = Icons.Filled.Lock),
-                            contentDescription = "${it.title}",
+                            contentDescription = it.title,
                             modifier = Modifier
                                 .height(50.dp)
                                 .width(50.dp)
@@ -64,20 +76,26 @@ fun TcgDrawer(onMenuIconClicked : () -> Unit = {})
 
         NavigationDrawerItem(label = { Text("View All Games") }, selected = true, onClick = { },
             icon = {
-                Icon(painter = painterResource(id = R.drawable.playing_cards), contentDescription = "",
+                Icon(
+                    painter = painterResource(id = R.drawable.playing_cards),
+                    contentDescription = "",
                     modifier = Modifier
-                    .height(50.dp)
-                    .width(50.dp).scale(scaleX = 1f, scaleY = -1f))
+                        .height(50.dp)
+                        .width(50.dp)
+                        .scale(scaleX = 1f, scaleY = -1f)
+                )
             })
     }
 
 }
 
 @Composable
-fun TcgDrawer_Header(onMenuIconClicked : () -> Unit)
-{
+fun TcgDrawer_Header(onMenuIconClicked: () -> Unit) {
     Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-        IconButton(onClick = { onMenuIconClicked() }, modifier = Modifier.padding(top = 10.dp,end = 10.dp)) {
+        IconButton(
+            onClick = { onMenuIconClicked() },
+            modifier = Modifier.padding(top = 10.dp, end = 10.dp)
+        ) {
             Image(imageVector = Icons.Filled.Menu, contentDescription = "Hamburger")
         }
     }
@@ -86,7 +104,6 @@ fun TcgDrawer_Header(onMenuIconClicked : () -> Unit)
 
 @Preview(showBackground = true)
 @Composable
-fun Drawer_Preview()
-{
-    TcgDrawer()
+fun Drawer_Preview() {
+//    TcgDrawer()
 }

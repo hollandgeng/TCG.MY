@@ -1,11 +1,13 @@
 package com.application.tcgmy.data
 
+import com.application.tcgmy.constants.GameTitle
 import java.util.UUID
 
 
 data class Game (
     val id : UUID = UUID.randomUUID(),
-    val title : String,
+    val code : GameTitle = GameTitle.Default,
+    val title : String = "",
     val imageUrl : String? = null
 )
 
